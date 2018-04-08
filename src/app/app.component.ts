@@ -23,7 +23,7 @@ export class MyApp {
 
       window["ApiAIPlugin"].init(
         {
-            clientAccessToken: "c1f5ad8a85a8491c97570bf96971ef00", // insert your client access key here 
+            clientAccessToken: "c1f5ad8a85a8491c97570bf96971ef00", 
             lang: "en" // set lang tag from list of supported languages 
         }, 
         function(result) { 
