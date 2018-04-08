@@ -24,13 +24,14 @@ export class HomePage {
   }
 
   sendText(){
-    window["ApiAIPlugin"].requestText({
+    /*window["ApiAIPlugin"].requestText({
       query: "Hello"
     }, (response) => {
       alert(JSON.stringify(response));
     }, (error) => {
       alert(JSON.stringify(error));
-    })
+    })*/
+    alert("Hi");
   }
 
 }
