@@ -1,5 +1,5 @@
-import { Component, NgZone } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, NgZone, ViewChild } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 declare var window;
@@ -12,6 +12,7 @@ export class HomePage {
 
   messages: any[] = [];
   text: string = "";
+  @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, public ngZone: NgZone, public tts: TextToSpeech) {
     this.messages.push({
@@ -22,12 +23,16 @@ export class HomePage {
   }
 
   sendText(){
+    if(this.text.length==0){
+      return;
+    }
     let message = this.text;
 
     this.messages.push({
       text: message,
       sender: "me"
     });
+    this.content.scrollToBottom(200);
 
     this.text = "";
 
@@ -40,6 +45,7 @@ export class HomePage {
           text: response.result.fulfillment.speech,
           sender: "api"
         });
+        this.content.scrollToBottom(200);
       })      
     }, (error) => {
       alert(JSON.stringify(error));
