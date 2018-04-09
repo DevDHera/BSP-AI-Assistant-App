@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var window;
 
@@ -10,28 +11,39 @@ declare var window;
 export class HomePage {
 
   messages: any[] = [];
+  text: string = "";
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public ngZone: NgZone) {
     this.messages.push({
       text: "Hi, how can I help you?",
       sender: "api"
     })
 
-    this.messages.push({
-      text: "Hello",
-      sender: "me"
-    })
   }
 
   sendText(){
+    let message = this.text;
+
+    this.messages.push({
+      text: message,
+      sender: "me"
+    });
+
+    this.text = "";
+
     window["ApiAIPlugin"].requestText({
-      query: "Hello"
+      query: message
     }, (response) => {
-      alert(JSON.stringify(response));
+
+      this.ngZone.run(() => {
+        this.messages.push({
+          text: response.result.fulfillment.speech,
+          sender: "api"
+        });
+      })      
     }, (error) => {
       alert(JSON.stringify(error));
-    })
-    //alert("Hi");
+    })    
   }
 
 }

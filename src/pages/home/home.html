@@ -34,7 +34,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-item>
-      <ion-input type="text" placeholder="Your Message Here..."></ion-input>
+      <ion-input type="text" placeholder="Your Message Here..." [(ngModel)]="text"></ion-input>
       <button ion-button icon-only item-right clear (click)="sendText()">
         <ion-icon name="send"></ion-icon>
       </button>
